@@ -7,7 +7,7 @@ import {
   filter,
   from,
   map, Observable,
-  pluck, Subject,
+  pluck, share, Subject,
   switchMap, takeUntil,
   toArray,
   zip
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private httpService: AppHttpService) {
     this.item$ = this.httpService.getAppoitment(this.size)
       .pipe(
+        share(),
         takeUntil(this.notifier),
         pluck('entry'),
         switchMap((entries) => from(entries)),
